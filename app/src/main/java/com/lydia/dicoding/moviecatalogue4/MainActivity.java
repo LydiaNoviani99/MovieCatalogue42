@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             mFragmentManager.beginTransaction().remove(fragment).commit();
         }
 
-        mFragmentTransaction.add(R.id.frame_container, mFavouriteFragment, FavouriteFragment.class.getSimpleName());
+        mFragmentTransaction.add(R.id.frame_container, mFavouriteFragment, FavouriteTvFragment.class.getSimpleName());
         mFragmentTransaction.commit();
     }
 

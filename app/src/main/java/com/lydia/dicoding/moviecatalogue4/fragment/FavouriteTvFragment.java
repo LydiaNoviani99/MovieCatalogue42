@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.lydia.dicoding.moviecatalogue4.DetailActivity;
 import com.lydia.dicoding.moviecatalogue4.R;
@@ -60,7 +61,7 @@ public class FavouriteTvFragment extends Fragment implements TvShowAdapter.TvSho
         tvShowAdapter = new TvShowAdapter();
         tvShowAdapter.setTvShowDataListener(this);
         rvTv.setAdapter(tvShowAdapter);
-
+        Toast.makeText(getContext(), "aaa", Toast.LENGTH_SHORT).show();
         new LoadNoteAsync().execute();
     }
 
