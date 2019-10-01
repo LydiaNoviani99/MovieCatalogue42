@@ -13,10 +13,12 @@ import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.AUTHORITY;
 import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.CONTENT_URI;
 import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TABLE_NAME;
 
-public class MovieProvider extends ContentProvider {
+public class MovieProvider  extends ContentProvider {
 
     private static final int MOVIE = 1;
     private static final int MOVIE_ID = 2;
+    private static final int TVSHOW = 3;
+    private static final int TVSHOW_ID = 4;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -27,6 +29,12 @@ public class MovieProvider extends ContentProvider {
         sUriMatcher.addURI(AUTHORITY,
                 TABLE_NAME + "/#",
                 MOVIE_ID);
+
+        sUriMatcher.addURI(AUTHORITY, TABLE_NAME, TVSHOW);
+
+        sUriMatcher.addURI(AUTHORITY,
+                TABLE_NAME + "/#",
+                TVSHOW_ID);
     }
 
     private MovieHelper movieHelper;
@@ -46,6 +54,12 @@ public class MovieProvider extends ContentProvider {
                 cursor = movieHelper.queryProvider();
                 break;
             case MOVIE_ID:
+                cursor = movieHelper.queryByIdProvider(uri.getLastPathSegment());
+                break;
+            case TVSHOW:
+                cursor = movieHelper.queryProvider();
+                break;
+            case TVSHOW_ID:
                 cursor = movieHelper.queryByIdProvider(uri.getLastPathSegment());
                 break;
             default:
@@ -71,6 +85,9 @@ public class MovieProvider extends ContentProvider {
             case MOVIE:
                 added = movieHelper.insertProvider(contentValues);
                 break;
+            case TVSHOW:
+                added = movieHelper.insertProvider(contentValues);
+                break;
             default:
                 added = 0;
                 break;
@@ -89,6 +106,9 @@ public class MovieProvider extends ContentProvider {
             case MOVIE_ID:
                 updated = movieHelper.updateProvider(uri.getLastPathSegment(), contentValues);
                 break;
+            case TVSHOW_ID:
+                updated = movieHelper.updateProvider(uri.getLastPathSegment(), contentValues);
+                break;
             default:
                 updated = 0;
                 break;
@@ -105,6 +125,9 @@ public class MovieProvider extends ContentProvider {
         int deleted;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
+                deleted = movieHelper.deleteProvider(uri.getLastPathSegment());
+                break;
+            case TVSHOW_ID:
                 deleted = movieHelper.deleteProvider(uri.getLastPathSegment());
                 break;
             default:

@@ -27,18 +27,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     );
 
 
-//    private static final String SQL_CREATE_TABLE_TVSHOW = String.format("CREATE TABLE %s" +
-//                    " (%s INTEGER PRIMARY KEY," +
-//                    " %s TEXT NOT NULL," +
-//                    " %s TEXT NOT NULL," +
-//                    " %s TEXT NOT NULL," +
-//                    " %s INTEGER NOT NULL)",
-//            DatabaseContract.TvshowColumns.TABLE_NAME,
-//            DatabaseContract.TvshowColumns._ID,
-//            DatabaseContract.TvshowColumns.TITLE,
-//            DatabaseContract.TvshowColumns.OVERVIEW,
-//            DatabaseContract.TvshowColumns.POSTER_PATH
-//    );
+    private static final String SQL_CREATE_TABLE_TVSHOW = String.format("CREATE TABLE %s" +
+                    " (%s INTEGER PRIMARY KEY," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL,",
+            DatabaseContract.TvshowColumns.TABLE_NAME,
+            DatabaseContract.TvshowColumns._ID,
+            DatabaseContract.TvshowColumns.TITLE,
+            DatabaseContract.TvshowColumns.OVERVIEW,
+            DatabaseContract.TvshowColumns.POSTER_PATH
+    );
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,13 +47,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(SQL_CREATE_TABLE_MOVIE);
-//        db.execSQL(SQL_CREATE_TABLE_TVSHOW);
+        db.execSQL(SQL_CREATE_TABLE_TVSHOW);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.MovieColumns.TABLE_NAME);
-//        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.TvshowColumns.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.TvshowColumns.TABLE_NAME);
         onCreate(db);
     }
 
