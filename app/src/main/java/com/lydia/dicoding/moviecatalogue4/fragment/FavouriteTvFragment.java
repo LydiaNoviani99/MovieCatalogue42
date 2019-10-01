@@ -26,10 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.provider.BaseColumns._ID;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.CONTENT_URI;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.OVERVIEW;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.POSTER_PATH;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.TITLE;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.CONTENT_URI;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.OVERVIEW;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.POSTER_PATH;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TITLE;
 
 public class FavouriteTvFragment extends Fragment implements TvShowAdapter.TvShowDataListener {
 

@@ -6,19 +6,17 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.lydia.dicoding.moviecatalogue4.entity.Movie;
+import com.lydia.dicoding.moviecatalogue4.entity.TvShow;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.OVERVIEW;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.POPULARITY;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.POSTER_PATH;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.RELEASE_DATE;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TABLE_NAME;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TITLE;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.OVERVIEW;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.POSTER_PATH;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.TABLE_NAME;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.TITLE;
 
-public class MovieHelper {
+public class TvShowHelper {
 
     private static String DATABASE_TABLE = TABLE_NAME;
     private Context context;
@@ -26,11 +24,11 @@ public class MovieHelper {
 
     private SQLiteDatabase database;
 
-    public MovieHelper(Context context) {
+    public TvShowHelper(Context context) {
         this.context = context;
     }
 
-    public MovieHelper open() throws SQLException {
+    public TvShowHelper open() throws SQLException {
         databaseHelper = new DatabaseHelper(context);
         database = databaseHelper.getWritableDatabase();
         return this;
@@ -40,8 +38,8 @@ public class MovieHelper {
         databaseHelper.close();
     }
 
-    public ArrayList<Movie> query() {
-        ArrayList<Movie> arrayList = new ArrayList();
+    public ArrayList<TvShow> query() {
+        ArrayList<TvShow> arrayList = new ArrayList();
         Cursor cursor = database.query(DATABASE_TABLE,
                 null,
                 null,
@@ -51,18 +49,16 @@ public class MovieHelper {
                 _ID + " DESC",
                 null);
         cursor.moveToFirst();
-        Movie movie;
+        TvShow tvShow;
         if (cursor.getCount() > 0) {
             do {
-                movie = new Movie();
-                movie.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
-                movie.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
-                movie.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
-                movie.setPosterPath(cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH)));
-                movie.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_DATE)));
-                movie.setPopularity(cursor.getInt(cursor.getColumnIndexOrThrow(POPULARITY)));
+                tvShow = new TvShow();
+                tvShow.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                tvShow.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
+                tvShow.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
+                tvShow.setPosterPath(cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH)));
 
-                arrayList.add(movie);
+                arrayList.add(tvShow);
                 cursor.moveToNext();
             } while (!cursor.isAfterLast());
         }
@@ -70,25 +66,21 @@ public class MovieHelper {
         return arrayList;
     }
 
-    public long insert(Movie movie) {
+    public long insert(TvShow tvShow) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(_ID, movie.getId());
-        initialValues.put(TITLE, movie.getTitle());
-        initialValues.put(OVERVIEW, movie.getOverview());
-        initialValues.put(POSTER_PATH, movie.getPosterPath());
-        initialValues.put(RELEASE_DATE, movie.getReleaseDate());
-        initialValues.put(POPULARITY, movie.getPopularity());
+        initialValues.put(_ID, tvShow.getId());
+        initialValues.put(TITLE, tvShow.getTitle());
+        initialValues.put(OVERVIEW, tvShow.getOverview());
+        initialValues.put(POSTER_PATH, tvShow.getPosterPath());
         return database.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public int update(Movie movie) {
+    public int update(TvShow tvShow) {
         ContentValues args = new ContentValues();
-        args.put(TITLE, movie.getTitle());
-        args.put(OVERVIEW, movie.getOverview());
-        args.put(POSTER_PATH, movie.getPosterPath());
-        args.put(RELEASE_DATE, movie.getReleaseDate());
-        args.put(POPULARITY, movie.getPopularity());
-        return database.update(DATABASE_TABLE, args, _ID + "= '" + movie.getId() + "'", null);
+        args.put(TITLE, tvShow.getTitle());
+        args.put(OVERVIEW, tvShow.getOverview());
+        args.put(POSTER_PATH, tvShow.getPosterPath());
+        return database.update(DATABASE_TABLE, args, _ID + "= '" + tvShow.getId() + "'", null);
     }
 
     public int delete(int id) {

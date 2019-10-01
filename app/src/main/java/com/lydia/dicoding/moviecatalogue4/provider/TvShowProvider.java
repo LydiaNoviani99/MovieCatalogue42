@@ -7,34 +7,35 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.lydia.dicoding.moviecatalogue4.db.MovieHelper;
+import com.lydia.dicoding.moviecatalogue4.db.TvShowHelper;
 
 import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.AUTHORITY;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.CONTENT_URI;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TABLE_NAME;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.CONTENT_URI;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.TvshowColumns.TABLE_NAME;
 
-public class MovieProvider extends ContentProvider {
 
-    private static final int MOVIE = 1;
-    private static final int MOVIE_ID = 2;
+public class TvShowProvider extends ContentProvider {
+
+    private static final int TVSHOW = 1;
+    private static final int TVSHOW_ID = 2;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
 
-        sUriMatcher.addURI(AUTHORITY, TABLE_NAME, MOVIE);
+        sUriMatcher.addURI(AUTHORITY, TABLE_NAME, TVSHOW);
 
         sUriMatcher.addURI(AUTHORITY,
                 TABLE_NAME + "/#",
-                MOVIE_ID);
+                TVSHOW_ID);
     }
 
-    private MovieHelper movieHelper;
+    private TvShowHelper tvShowHelper;
 
     @Override
     public boolean onCreate() {
-        movieHelper = new MovieHelper(getContext());
-        movieHelper.open();
+        tvShowHelper = new TvShowHelper(getContext());
+        tvShowHelper.open();
         return true;
     }
 
@@ -42,11 +43,11 @@ public class MovieProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings1, String s1) {
         Cursor cursor;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
-                cursor = movieHelper.queryProvider();
+            case TVSHOW:
+                cursor = tvShowHelper.queryProvider();
                 break;
-            case MOVIE_ID:
-                cursor = movieHelper.queryByIdProvider(uri.getLastPathSegment());
+            case TVSHOW_ID:
+                cursor = tvShowHelper.queryByIdProvider(uri.getLastPathSegment());
                 break;
             default:
                 cursor = null;
@@ -68,8 +69,8 @@ public class MovieProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
         long added;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
-                added = movieHelper.insertProvider(contentValues);
+            case TVSHOW:
+                added = tvShowHelper.insertProvider(contentValues);
                 break;
             default:
                 added = 0;
@@ -86,8 +87,8 @@ public class MovieProvider extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         int updated;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE_ID:
-                updated = movieHelper.updateProvider(uri.getLastPathSegment(), contentValues);
+            case TVSHOW_ID:
+                updated = tvShowHelper.updateProvider(uri.getLastPathSegment(), contentValues);
                 break;
             default:
                 updated = 0;
@@ -104,8 +105,8 @@ public class MovieProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, String s, String[] strings) {
         int deleted;
         switch (sUriMatcher.match(uri)) {
-            case MOVIE_ID:
-                deleted = movieHelper.deleteProvider(uri.getLastPathSegment());
+            case TVSHOW_ID:
+                deleted = tvShowHelper.deleteProvider(uri.getLastPathSegment());
                 break;
             default:
                 deleted = 0;
