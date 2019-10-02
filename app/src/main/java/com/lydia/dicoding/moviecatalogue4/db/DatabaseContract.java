@@ -20,7 +20,7 @@ public class DatabaseContract {
         public static String RELEASE_DATE = "release_date";
         public static String POPULARITY = "popularity";
 
-        public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
+        public static final Uri CONTENT_URI_MOVIE = new Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
                 .build();
@@ -33,7 +33,7 @@ public class DatabaseContract {
         public static String OVERVIEW = "overview";
         public static String POSTER_PATH = "poster_path";
 
-        public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
+        public static final Uri CONTENT_URI_TVSHOW = new Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)
                 .appendPath(TABLE_NAME)
                 .build();

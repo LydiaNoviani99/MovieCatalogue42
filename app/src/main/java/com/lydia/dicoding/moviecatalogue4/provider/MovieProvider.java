@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import com.lydia.dicoding.moviecatalogue4.db.MovieHelper;
 
 import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.AUTHORITY;
-import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.CONTENT_URI;
+import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.CONTENT_URI_MOVIE;
 import static com.lydia.dicoding.moviecatalogue4.db.DatabaseContract.MovieColumns.TABLE_NAME;
 
 public class MovieProvider  extends ContentProvider {
@@ -96,7 +96,7 @@ public class MovieProvider  extends ContentProvider {
         if (added > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
-        return Uri.parse(CONTENT_URI + "/" + added);
+        return Uri.parse(CONTENT_URI_MOVIE + "/" + added);
     }
 
     @Override
